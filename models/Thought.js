@@ -1,31 +1,43 @@
 // require schema and model from mongoose
 const { Schema, model } = require('mongoose');
+// require reactionSchema to include
+const reactionSchema = require('./Reaction');
 
+
+// define Thought schema
 const thoughtSchema = new Schema(
   {
-    text: {
+    thoughtText: {
         type: String,
         required: true,
         minlength: 1,
-        maxlength: 255
+        maxlength: 280
     },
-    author: [
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        // TODO: Use a getter method to format the timestamp on query
+    },
+    username: [
         {
-        type: Schema.Types.ObjectId, 
+        type: Schema.Types.String, 
         ref: 'User',
         }
     ],
-    dateCreated: {
-        type: Date,
-        default: Date.now
-    },
+    reactions: [reactionSchema]
   },
   {
     toJSON: {
         virtuals: true,
+        getters: true
     }
   }
 );
+
+// add reactionCount virtual
+thoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
+});
 
 // compile & export Thought model
 const Thought = model('Thought', thoughtSchema);

@@ -1,3 +1,4 @@
+// require schema and model from mongoose
 const { Schema, model } = require('mongoose');
 
 // define User schema
@@ -34,6 +35,12 @@ const userSchema = new Schema(
     }
   }
 );
+
+// add friendCount virtual
+userSchema.virtual('friendCount').get(function () {
+    return this.friends.length;
+});
+
 
 // compile & export User model
 const User = model('User', userSchema);
