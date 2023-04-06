@@ -32,7 +32,5 @@ const reactionSchema = new Schema(
   }
 );
 
-
-// compile & export User model
-const Reaction = model('Reaction', reactionSchema);
-module.exports = Reaction;
+// `this will not be a model` (from instructions) - just export reactionSchema
+module.exports = reactionSchema;

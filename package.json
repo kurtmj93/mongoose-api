@@ -4,7 +4,8 @@
   "description": "A social media API using mongoose ODM and MongoDB.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node ./utils/seedUsers.js"
   },
   "repository": {
     "type": "git",
