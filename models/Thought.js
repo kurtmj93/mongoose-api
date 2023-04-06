@@ -2,7 +2,8 @@
 const { Schema, model } = require('mongoose');
 // require reactionSchema to include
 const reactionSchema = require('./Reaction');
-
+// require formatDate util for getter in createdAt
+const { formatDate } = require('../utils/formatDate');
 
 // define Thought schema
 const thoughtSchema = new Schema(
@@ -16,7 +17,8 @@ const thoughtSchema = new Schema(
     createdAt: {
         type: Date,
         default: Date.now,
-        // TODO: Use a getter method to format the timestamp on query
+        // getter method formats the date on query
+        get: date => formatDate(date)
     },
     username: [
         {
