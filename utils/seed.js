@@ -1,4 +1,4 @@
-const db = require('../config/connection');
+/* const db = require('../config/connection');
 const { User, Thought } = require('../models');
 
 
@@ -34,6 +34,8 @@ db.once('open', async () => {
     console.log('db seeded with users and thoughts');
     process.exit(0);
 });
+
+*/ 
 
 /* ISSUE: This method of seeding is not creating the reference 
 or giving ownership of the thought to the created User,
