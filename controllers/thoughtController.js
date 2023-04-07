@@ -62,6 +62,33 @@ const thoughtController = {
             res.status(500).json(err);
         });
     },
+    // update (PUT) thought by id
+    updateThought(req, res) {   
+        Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+            {   $set: req.body }, 
+            { 
+                runValidators: true,
+                new: true 
+            })
+        .then((thoughtData) => {
+            if (!thoughtData) {
+                return res.status(404).json({message: 'No thought found with that ID' });
+            } else { 
+                res.json(thoughtData);
+            } 
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
+    // TODO: reaction routes
+    createReaction(req, res) {
+
+    },
+    deleteReaction(req, res) {
+
+    }
 };
 
 module.exports = thoughtController;
