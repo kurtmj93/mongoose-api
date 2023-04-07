@@ -98,7 +98,7 @@ const userController = {
             if (!userData) {
                 return res.status(404).json({message: 'No user found with that ID'});
             } else {
-                res.json(userData); // BUG: userData still shows friendId in this response, but it IS being deleted
+                return res.json({message: 'Friend removed.'});
             }
         })
         .catch((err) => {

@@ -110,7 +110,7 @@ const thoughtController = {
             if (!thoughtData) {
                 return res.status(404).json({message: 'No thought found with that ID' });
             } else {
-                res.json({message: 'Reaction deleted.'});
+                return res.json({message: 'Reaction deleted.'});
             }
         })
         .catch((err) => {
