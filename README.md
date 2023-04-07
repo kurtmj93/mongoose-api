@@ -22,6 +22,8 @@
 
   Interact with the API locally using Insomnia.
 
+  Demonstration Video: (https://drive.google.com/file/d/1F5PGrcDA4maLt_ytC6hYq64oOPEOlODs/view)
+
   ## Credits
 
   University of Richmond Coding Bootcamp
