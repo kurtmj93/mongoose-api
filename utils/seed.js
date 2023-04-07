@@ -1,7 +1,7 @@
-/* const db = require('../config/connection');
+const db = require('../config/connection');
 const { User, Thought } = require('../models');
 
-
+/* SEED DIDN'T WORK AS INTENDED, SEE ISSUE BELOW
 const seedUsers = [
     {
         username: 'CharlesinCharge',
@@ -23,19 +23,18 @@ const seedThoughts = [
         username: 'EdgarAllen'
     }
 ];
+*/ 
 
 db.on('error', (err) => err);
 db.once('open', async () => {
     console.log('db connected');
     await User.deleteMany({});
     await Thought.deleteMany({});
-    await User.collection.insertMany(seedUsers);
-    await Thought.collection.insertMany(seedThoughts);
-    console.log('db seeded with users and thoughts');
+    /* await User.collection.insertMany(seedUsers);
+    await Thought.collection.insertMany(seedThoughts); */
+    console.log('db cleared');
     process.exit(0);
 });
-
-*/ 
 
 /* ISSUE: This method of seeding is not creating the reference 
 or giving ownership of the thought to the created User,
