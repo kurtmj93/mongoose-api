@@ -34,20 +34,25 @@ const userController = {
                 res.status(500).json(err);
             });
     },
-    deleteUser(req, res) { // TODO, BONUS: also delete user's associated thoughts
+    // DELETE user by id
+    deleteUser(req, res) { 
         User.findOneAndRemove({ _id: req.params.userId })
         .then((userData) => {
             if (!userData) {
                 return res.status(404).json({message: 'No user found with that ID' });
             } else {
-            res.json({ message: 'User with id ' + userData._id + ' deleted' });
+            return Thought.deleteMany({ _id: { $in: userData.thoughts } }); // BONUS: delete user's associated thoughts
             }
+        })
+        .then(() => {
+            res.json({ message: 'User deleted, along with associated thoughts.' });
         })
         .catch((err) => {
             console.log(err);
             res.status(500).json(err);
         });
     },
+    // update (PUT) user by id
     updateUser(req, res) {
         User.findOneAndUpdate({ _id: req.params.userId },
             {   $set: req.body }, 
@@ -67,6 +72,7 @@ const userController = {
             res.status(500).json(err);
         });
     },
+    // POST new friend to User by id
     addFriend(req, res) {
         User.findOneAndUpdate({ _id: req.params.userId },
             { $addToSet: { friends: req.params.friendId } },
@@ -83,6 +89,7 @@ const userController = {
             res.status(500).json(err);
         });
     },
+    // DELETE friend from User by id
     unFriend(req, res) {
         User.findOneAndUpdate({ _id: req.params.userId },
             { $pull: { friends: req.params.friendId } }
@@ -91,7 +98,7 @@ const userController = {
             if (!userData) {
                 return res.status(404).json({message: 'No user found with that ID'});
             } else {
-                res.json(userData); // BUG: userData still shows friendId in this response, but it is deleted
+                res.json(userData); // BUG: userData still shows friendId in this response, but it IS being deleted
             }
         })
         .catch((err) => {

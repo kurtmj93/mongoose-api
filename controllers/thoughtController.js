@@ -1,6 +1,7 @@
 const { User, Thought } = require('../models');
 
 const thoughtController = {
+    // GET all thoughts
     getThoughts(req, res) { 
         Thought.find()
             .then((thoughtData) => {
@@ -11,6 +12,7 @@ const thoughtController = {
                 res.status(500).json(err);
             });
     },
+    // GET thought by id
     getOneThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
             .populate('reactions')
@@ -22,6 +24,7 @@ const thoughtController = {
                 res.status(500).json(err);
             });
     },
+    // POST new thought
     createThought(req, res) {
         Thought.create(req.body)
             .then((thoughtData) => { 
@@ -38,7 +41,27 @@ const thoughtController = {
                     console.log(err);
                     res.status(500).json(err);
             });
-    }
+    },
+    // DELETE thought by id
+    deleteThought(req, res) { 
+        Thought.findOneAndRemove({ _id: req.params.thoughtId })
+        .then((thoughtData) => {
+            if (!thoughtData) {
+                return res.status(404).json({message: 'No thought found with that ID' });
+            } else {
+            return User.findOneAndUpdate({ thoughts: req.params.thoughtId }, // find a user with thoughtId in its thought array
+                { $pull: { thoughts: req.params.thoughtId } } // then pull the thoughtId out of the thought array
+                );
+            }
+        })
+        .then(() => {
+            res.json({ message: 'Successfully deleted.' });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
 };
 
 module.exports = thoughtController;
