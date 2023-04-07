@@ -55,7 +55,7 @@ const thoughtController = {
             }
         })
         .then(() => {
-            res.json({ message: 'Successfully deleted.' });
+            res.json({ message: 'Thought deleted.' });
         })
         .catch((err) => {
             console.log(err);
@@ -110,7 +110,7 @@ const thoughtController = {
             if (!thoughtData) {
                 return res.status(404).json({message: 'No thought found with that ID' });
             } else {
-                res.json(thoughtData);
+                res.json({message: 'Reaction deleted.'});
             }
         })
         .catch((err) => {
