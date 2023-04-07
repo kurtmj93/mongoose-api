@@ -1,5 +1,5 @@
 // require schema from mongoose
-const { Schema } = require('mongoose');
+const { Schema, mongoose } = require('mongoose');
 
 // require formatDate util for getter in createdAt
 const { formatDate } = require('../utils/formatDate');
@@ -9,7 +9,7 @@ const reactionSchema = new Schema(
   {
     reactionId: {
         type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId()
+        default: () => new mongoose.Types.ObjectId()
     },
     reactionBody: {
         type: String,

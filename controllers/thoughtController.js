@@ -82,12 +82,41 @@ const thoughtController = {
             res.status(500).json(err);
         });
     },
-    // TODO: reaction routes
+    // POST reaction to thought by thought id
     createReaction(req, res) {
-
+        Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+            {   $addToSet: { reactions: req.body } }, 
+            { 
+                runValidators: true,
+                new: true 
+            })
+            .then((thoughtData) => {
+                if (!thoughtData) {
+                    return res.status(404).json({message: 'No thought exists with that id.'})
+                } else {
+                    res.json(thoughtData);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+            });
     },
+    // DELETE reaction to thought by reaction id
     deleteReaction(req, res) {
-
+        Thought.findOneAndRemove({ _id: req.params.thoughtId },
+            { $pull: { reactions: req.params.reactionId }})
+        .then((thoughtData) => {
+            if (!thoughtData) {
+                return res.status(404).json({message: 'No thought found with that ID' });
+            } else {
+                res.json(thoughtData);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
     }
 };
 
